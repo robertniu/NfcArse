@@ -213,13 +213,7 @@ public class MUL_Read extends BasicActivity {
                 ats = Common.byte2HexString(iso.getHistoricalBytes());
             }
             // Identify tag type.
-            int tagTypeResourceID = getTagIdentifier(atqa, sak, ats);
-            String tagType = "";
-            if (tagTypeResourceID == R.string.tag_unknown && mMFCSupport > -2) {
-                tagType = getString(R.string.tag_unknown_mf_classic);
-            } else {
-                tagType = getString(tagTypeResourceID);
-            }
+           
             
             ////
             //purchaseValue	174	17 
@@ -371,41 +365,7 @@ public class MUL_Read extends BasicActivity {
         }
     }
 
-    /**
-     * Get (determine) the tag type resource ID from ATQA + SAK + ATS.
-     * If no resource is found check for the tag type only on ATQA + SAK
-     * (and then on ATQA only).
-     * @param atqa The ATQA from the tag.
-     * @param sak The SAK from the tag.
-     * @param ats The ATS from the tag.
-     * @return The resource ID.
-     */
-    private int getTagIdentifier(String atqa, String sak, String ats) {
-        String prefix = "tag_";
-        ats = ats.replace("-", "");
-
-        // First check on ATQA + SAK + ATS.
-        int ret = getResources().getIdentifier(
-                prefix + atqa + sak + ats, "string", getPackageName());
-
-        if (ret == 0) {
-            // Check on ATQA + SAK.
-            ret = getResources().getIdentifier(
-                    prefix + atqa + sak, "string", getPackageName());
-        }
-
-        if (ret == 0) {
-            // Check on ATQA.
-            ret = getResources().getIdentifier(
-                    prefix + atqa, "string", getPackageName());
-        }
-
-        if (ret == 0) {
-            // No match found return "Unknown".
-            return R.string.tag_unknown;
-        }
-        return ret;
-    }
+ 
     
     
 }
